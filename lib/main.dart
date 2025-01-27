@@ -16,26 +16,35 @@ class MovtalogApp extends StatelessWidget {
         brightness: Brightness.dark,
         primaryColor: Colors.black,
         scaffoldBackgroundColor: Colors.black,
+        fontFamily: 'Karla',
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.yellow,
           titleTextStyle: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+            color: Colors.black,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Lora',
+          ),
           iconTheme: IconThemeData(color: Colors.black),
         ),
-        iconTheme: const IconThemeData(
-          color: Colors.black,
-        ),
-        inputDecorationTheme: const InputDecorationTheme(
-          labelStyle: TextStyle(color: Colors.white),
-          hintStyle: TextStyle(color: Colors.white),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
-          ),
-        ),
         textTheme: const TextTheme(
-          bodyLarge: TextStyle(color: Colors.white),
-          bodyMedium: TextStyle(color: Colors.white),
-          headlineLarge: TextStyle(color: Colors.white),
+          bodyLarge: TextStyle(fontFamily: 'Karla'),
+          bodyMedium: TextStyle(fontFamily: 'Karla'),
+          headlineLarge: TextStyle(
+            fontFamily: 'Lora',
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+          ),
+          headlineMedium: TextStyle(
+            fontFamily: 'Lora',
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+          headlineSmall: TextStyle(
+            fontFamily: 'Lora',
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       home: const MovieListScreen(),

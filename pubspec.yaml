@@ -55,6 +55,13 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  fonts:
+    - family: Karla
+      fonts:
+      - asset: fonts/Karla/static/Karla-Regular.ttf
+    - family: Lora
+      fonts:
+      - asset: fonts/Lora/static/Lora-Regular.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
