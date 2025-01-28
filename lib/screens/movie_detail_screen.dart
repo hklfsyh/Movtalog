@@ -44,8 +44,20 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             widget.movie.rating.toString(),
           ],
         );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${widget.movie.title} added to favorites!'),
+            duration: const Duration(seconds: 1),
+          ),
+        );
       } else {
         prefs.remove('favorite_${widget.movie.title}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${widget.movie.title} removed from favorites!'),
+            duration: const Duration(seconds: 1),
+          ),
+        );
       }
     });
   }
@@ -58,7 +70,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
-          // Jika lebar layar lebih dari 600, tampilkan layout horizontal
           if (constraints.maxWidth > 600) {
             return SingleChildScrollView(
               child: Padding(
@@ -66,7 +77,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Bagian 1: Gambar Poster Film
                     Expanded(
                       flex: 2,
                       child: Card(
@@ -84,14 +94,11 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       ),
                     ),
                     const SizedBox(width: 16.0),
-
-                    // Bagian 2: Detail Film dan Tombol Favorit
                     Expanded(
                       flex: 3,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Judul, Rating, dan Release Date
                           Card(
                             elevation: 5,
                             shape: RoundedRectangleBorder(
@@ -130,8 +137,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                             ),
                           ),
                           const SizedBox(height: 16.0),
-
-                          // Deskripsi Film
                           Card(
                             elevation: 5,
                             shape: RoundedRectangleBorder(
@@ -148,8 +153,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                             ),
                           ),
                           const SizedBox(height: 16.0),
-
-                          // Tombol Add to Favorites
                           Card(
                             elevation: 5,
                             shape: RoundedRectangleBorder(
@@ -191,14 +194,12 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
               ),
             );
           } else {
-            // Jika lebar layar kurang dari 600, tampilkan layout vertikal (untuk mobile)
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Bagian 1: Gambar Poster Film
                     Card(
                       elevation: 5,
                       shape: RoundedRectangleBorder(
@@ -214,8 +215,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 16.0),
-
-                    // Bagian 2: Judul, Rating, dan Release Date
                     Card(
                       elevation: 5,
                       shape: RoundedRectangleBorder(
@@ -254,8 +253,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 16.0),
-
-                    // Bagian 3: Deskripsi Film
                     Card(
                       elevation: 5,
                       shape: RoundedRectangleBorder(
@@ -272,8 +269,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 16.0),
-
-                    // Bagian 4: Tombol Add to Favorites
                     Card(
                       elevation: 5,
                       shape: RoundedRectangleBorder(
