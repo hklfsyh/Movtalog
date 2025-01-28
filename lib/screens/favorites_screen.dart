@@ -36,7 +36,6 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       }).toList();
     });
 
-    // Tampilkan SnackBar sebagai feedback
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Favorites list refreshed!'),

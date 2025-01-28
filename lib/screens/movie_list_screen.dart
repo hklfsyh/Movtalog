@@ -83,8 +83,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Center(
               child: Container(
-                width: MediaQuery.of(context).size.width *
-                    0.5, // Menyesuaikan lebar menjadi 2/4 dari layar
+                width: MediaQuery.of(context).size.width * 0.5,
                 child: TextField(
                   controller: searchController,
                   decoration: InputDecoration(
@@ -158,9 +157,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
             },
           );
         } else {
-          int crossAxisCount = 5; // Default value
-
-          // Menyesuaikan jumlah kolom berdasarkan lebar layar
+          int crossAxisCount = 5;
           if (constraints.maxWidth >= 1200) {
             crossAxisCount = 5;
           } else if (constraints.maxWidth >= 1000) {
@@ -174,10 +171,9 @@ class _MovieListScreenState extends State<MovieListScreen> {
           return GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: crossAxisCount,
-              crossAxisSpacing: 4.0, // Kurangi jarak antar kolom
-              mainAxisSpacing: 4.0, // Kurangi jarak antar baris
-              childAspectRatio:
-                  0.55, // Menyesuaikan rasio agar gambar lebih tinggi
+              crossAxisSpacing: 4.0,
+              mainAxisSpacing: 4.0,
+              childAspectRatio: 0.55,
             ),
             itemCount: movies.length,
             itemBuilder: (context, index) {
@@ -208,11 +204,9 @@ class _MovieListScreenState extends State<MovieListScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                            10), // Bagian bawah gambar juga melengkung
+                        borderRadius: BorderRadius.circular(10),
                         child: AspectRatio(
-                          aspectRatio:
-                              0.7, // Sesuaikan rasio agar gambar lebih besar
+                          aspectRatio: 0.7,
                           child: Image.network(
                             movie.posterPath,
                             fit: BoxFit.cover,
@@ -222,17 +216,13 @@ class _MovieListScreenState extends State<MovieListScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                          8.0, 4.0, 8.0, 2.0), // Kurangi padding di sini
+                      padding: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 2.0),
                       child: Text(
                         movie.title,
-                        maxLines: 2, // Batasi jumlah baris pada teks judul
-                        overflow: TextOverflow
-                            .ellipsis, // Tambahkan ellipsis untuk judul yang terlalu panjang
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          fontSize: constraints.maxWidth >= 1200
-                              ? 14.0
-                              : 16.0, // Ukuran font berdasarkan lebar layar
+                          fontSize: constraints.maxWidth >= 1200 ? 14.0 : 16.0,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -242,22 +232,17 @@ class _MovieListScreenState extends State<MovieListScreen> {
                       child: Text(
                         'Rating: ${movie.rating}',
                         style: TextStyle(
-                          fontSize: constraints.maxWidth >= 1200
-                              ? 12.0
-                              : 14.0, // Ukuran font berdasarkan lebar layar
+                          fontSize: constraints.maxWidth >= 1200 ? 12.0 : 14.0,
                           color: Colors.grey,
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                          8.0, 2.0, 8.0, 2.0), // Kurangi padding di sini
+                      padding: const EdgeInsets.fromLTRB(8.0, 2.0, 8.0, 2.0),
                       child: Text(
                         'Release Date: ${movie.releaseDate}',
                         style: TextStyle(
-                          fontSize: constraints.maxWidth >= 1200
-                              ? 12.0
-                              : 14.0, // Ukuran font berdasarkan lebar layar
+                          fontSize: constraints.maxWidth >= 1200 ? 12.0 : 14.0,
                           color: Colors.grey,
                         ),
                       ),
