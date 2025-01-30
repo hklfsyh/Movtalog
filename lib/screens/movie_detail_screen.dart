@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:movtalog/models/movie.dart';
+import 'package:movtalog/widgets/movie_detail_card.dart';
+import 'package:movtalog/widgets/favorite_button.dart';
 
 class MovieDetailScreen extends StatefulWidget {
   final Movie movie;
@@ -99,43 +101,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Card(
-                            elevation: 5,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    widget.movie.title,
-                                    style: const TextStyle(
-                                      fontSize: 24.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8.0),
-                                  Text(
-                                    'Release Date: ${widget.movie.releaseDate}',
-                                    style: const TextStyle(
-                                      fontSize: 16.0,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8.0),
-                                  Text(
-                                    'Rating: ${widget.movie.rating}',
-                                    style: const TextStyle(
-                                      fontSize: 16.0,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                          MovieDetailCard(movie: widget.movie),
                           const SizedBox(height: 16.0),
                           Card(
                             elevation: 5,
@@ -153,38 +119,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                             ),
                           ),
                           const SizedBox(height: 16.0),
-                          Card(
-                            elevation: 5,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  IconButton(
-                                    icon: Icon(
-                                      isFavorite
-                                          ? Icons.favorite
-                                          : Icons.favorite_border,
-                                      color: Colors.red,
-                                    ),
-                                    onPressed: _toggleFavorite,
-                                  ),
-                                  const SizedBox(width: 8.0),
-                                  Text(
-                                    isFavorite
-                                        ? 'Added to Favorites'
-                                        : 'Add to Favorites',
-                                    style: const TextStyle(
-                                      fontSize: 16.0,
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                          FavoriteButton(
+                            isFavorite: isFavorite,
+                            onPressed: _toggleFavorite,
                           ),
                         ],
                       ),
@@ -215,43 +152,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 16.0),
-                    Card(
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.movie.title,
-                              style: const TextStyle(
-                                fontSize: 24.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 8.0),
-                            Text(
-                              'Release Date: ${widget.movie.releaseDate}',
-                              style: const TextStyle(
-                                fontSize: 16.0,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            const SizedBox(height: 8.0),
-                            Text(
-                              'Rating: ${widget.movie.rating}',
-                              style: const TextStyle(
-                                fontSize: 16.0,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    MovieDetailCard(movie: widget.movie),
                     const SizedBox(height: 16.0),
                     Card(
                       elevation: 5,
@@ -269,38 +170,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 16.0),
-                    Card(
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                              icon: Icon(
-                                isFavorite
-                                    ? Icons.favorite
-                                    : Icons.favorite_border,
-                                color: Colors.red,
-                              ),
-                              onPressed: _toggleFavorite,
-                            ),
-                            const SizedBox(width: 8.0),
-                            Text(
-                              isFavorite
-                                  ? 'Added to Favorites'
-                                  : 'Add to Favorites',
-                              style: const TextStyle(
-                                fontSize: 16.0,
-                                color: Colors.red,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    FavoriteButton(
+                      isFavorite: isFavorite,
+                      onPressed: _toggleFavorite,
                     ),
                   ],
                 ),
