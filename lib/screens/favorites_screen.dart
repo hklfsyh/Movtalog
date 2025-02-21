@@ -21,19 +21,37 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   Future<void> _loadFavorites() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      final keys = prefs.getKeys();
-      favoriteMovies =
-          keys.where((key) => key.startsWith('favorite_')).map((key) {
+    final keys = prefs.getKeys();
+
+    List<Movie> loadedMovies = [];
+
+    for (String key in keys) {
+      if (key.startsWith('favorite_')) {
         final movieDetails = prefs.getStringList(key);
-        return Movie(
-          title: movieDetails![0],
-          overview: movieDetails[1],
-          posterPath: movieDetails[2],
-          releaseDate: movieDetails[3],
-          rating: double.parse(movieDetails[4]),
-        );
-      }).toList();
+        if (movieDetails != null && movieDetails.length >= 6) {
+          try {
+            int movieId = int.tryParse(movieDetails[0]) ?? -1;
+            if (movieId != -1) {
+              loadedMovies.add(
+                Movie(
+                  id: movieId,
+                  title: movieDetails[1],
+                  overview: movieDetails[2],
+                  posterPath: movieDetails[3],
+                  releaseDate: movieDetails[4],
+                  rating: double.tryParse(movieDetails[5]) ?? 0.0,
+                ),
+              );
+            }
+          } catch (e) {
+            print('Error parsing movie: $e');
+          }
+        }
+      }
+    }
+
+    setState(() {
+      favoriteMovies = loadedMovies;
     });
 
     ScaffoldMessenger.of(context).showSnackBar(

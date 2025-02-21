@@ -1,4 +1,5 @@
 class Movie {
+  final int id;
   final String title;
   final String overview;
   final String posterPath;
@@ -6,6 +7,7 @@ class Movie {
   final double rating;
 
   Movie({
+    required this.id,
     required this.title,
     required this.overview,
     required this.posterPath,
@@ -19,6 +21,7 @@ class Movie {
         : 'https://via.placeholder.com/500x750?text=No+Image+Available';
 
     return Movie(
+      id: json['id'],
       title: json['title'] ?? 'No Title',
       overview: json['overview'] ?? 'No Overview',
       posterPath: posterPath,

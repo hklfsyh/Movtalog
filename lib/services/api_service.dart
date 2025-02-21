@@ -45,4 +45,28 @@ class ApiService {
       throw Exception('Failed to search movies');
     }
   }
+
+  Future<String?> fetchMovieTrailer(int movieId) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/movie/$movieId/videos?api_key=$apiKey'),
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        final List<dynamic> results = data['results'];
+
+        if (results.isNotEmpty) {
+          final trailer = results.firstWhere(
+            (video) => video['type'] == 'Trailer' && video['site'] == 'YouTube',
+            orElse: () => null,
+          );
+          return trailer != null ? trailer['key'] : null;
+        }
+      }
+    } catch (e) {
+      print('Error fetching trailer: $e');
+    }
+    return null;
+  }
 }

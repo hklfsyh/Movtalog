@@ -3,6 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:movtalog/models/movie.dart';
 import 'package:movtalog/widgets/movie_detail_card.dart';
 import 'package:movtalog/widgets/favorite_button.dart';
+import 'package:movtalog/services/api_service.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MovieDetailScreen extends StatefulWidget {
   final Movie movie;
@@ -15,11 +17,13 @@ class MovieDetailScreen extends StatefulWidget {
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
   bool isFavorite = false;
+  String? trailerKey;
 
   @override
   void initState() {
     super.initState();
     _loadFavoriteStatus();
+    _loadTrailer();
   }
 
   Future<void> _loadFavoriteStatus() async {
@@ -37,8 +41,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
 
       if (isFavorite) {
         prefs.setStringList(
-          'favorite_${widget.movie.title}',
+          'favorite_${widget.movie.id}',
           [
+            widget.movie.id.toString(),
             widget.movie.title,
             widget.movie.overview,
             widget.movie.posterPath,
@@ -53,7 +58,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
           ),
         );
       } else {
-        prefs.remove('favorite_${widget.movie.title}');
+        prefs.remove('favorite_${widget.movie.id}');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('${widget.movie.title} removed from favorites!'),
@@ -62,6 +67,55 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
         );
       }
     });
+  }
+
+  Future<void> _loadTrailer() async {
+    String? key = await ApiService().fetchMovieTrailer(widget.movie.id);
+    setState(() {
+      trailerKey = key;
+    });
+  }
+
+  void _showTrailerDialog() {
+    if (trailerKey == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Trailer not available!')),
+      );
+      return;
+    }
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          child: YoutubePlayerBuilder(
+            player: YoutubePlayer(
+              controller: YoutubePlayerController(
+                initialVideoId: trailerKey!,
+                flags: const YoutubePlayerFlags(autoPlay: true),
+              ),
+            ),
+            builder: (context, player) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    child: player,
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('Close'),
+                  ),
+                ],
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -123,6 +177,20 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                             isFavorite: isFavorite,
                             onPressed: _toggleFavorite,
                           ),
+                          const SizedBox(height: 16.0),
+                          Center(
+                            child: ElevatedButton.icon(
+                              onPressed: _showTrailerDialog,
+                              icon: const Icon(Icons.play_arrow),
+                              label: const Text('Play Trailer'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red,
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -173,6 +241,20 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     FavoriteButton(
                       isFavorite: isFavorite,
                       onPressed: _toggleFavorite,
+                    ),
+                    const SizedBox(height: 16.0),
+                    Center(
+                      child: ElevatedButton.icon(
+                        onPressed: _showTrailerDialog,
+                        icon: const Icon(Icons.play_arrow),
+                        label: const Text('Play Trailer'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                        ),
+                      ),
                     ),
                   ],
                 ),
